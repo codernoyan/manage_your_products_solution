@@ -33,11 +33,16 @@ const setProductsToLocalStorage = (name, quantity) => {
     if (!products) {
         products = {};
     }
-    products[name] = quantity;
+
+    if (products[name]) {
+        products[name] = parseInt(products[name]) + parseInt(quantity);
+    } else {
+        products[name] = quantity;
+    }
 
     localStorage.setItem('all-products', JSON.stringify(products));
     renderToDisplay()
-    console.table(products)
+    // console.table(products)
 }
 
 const renderToDisplay = () => {
@@ -53,7 +58,7 @@ const renderToDisplay = () => {
         div.innerHTML = `
         <div class="shadow-sm p-3 mb-2 bg-body rounded d-flex justify-content-between align-items-center">
             <div>
-            <span class="fs-3">${productName}</span>
+            <span class="fs-3">${productName.substring(0, 1).toUpperCase() + productName.substring(1)}</span>
             Quantity:<small class="fw-bold">
                 ${quantity}
             </small>
